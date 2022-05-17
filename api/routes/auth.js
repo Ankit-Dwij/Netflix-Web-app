@@ -4,10 +4,7 @@ const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 //Register
 router.post("/register", async (req, res) => {
-  const newUser = await User.findOne({ email: req.body.email });
-  if (newUser) return res.status(400).send("Email already registered.");
-
-  newUser = new User({
+  const newUser = new User({
     username: req.body.username,
     email: req.body.email,
     password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY),
@@ -40,7 +37,7 @@ router.post("/login", async (req, res) => {
     );
 
     const { password, ...info } = user._doc;
-    res.status(200).json(...info, accessToken);
+    res.status(200).json({ ...info, accessToken });
   } catch (err) {
     res.status(500).json(err);
   }
