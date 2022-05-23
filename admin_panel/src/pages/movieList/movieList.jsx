@@ -16,8 +16,6 @@ export default function MovieList() {
     getMovies(dispatch);
   }, [dispatch]);
 
-  console.log(movies);
-
   const handleDelete = (id) => {
     deleteMovie(id, dispatch);
   };

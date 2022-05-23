@@ -1,22 +1,66 @@
+import { useContext, useState } from "react";
 import "./newProduct.css";
-import { useState } from "react";
+import storage from "../../firebase";
+import { createMovie } from "../../context/movieContext/movieApiCalls";
+import { MovieContext } from "../../context/movieContext/movieContext";
 
 export default function NewProduct() {
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState();
   const [img, setImg] = useState(null);
   const [imgTitle, setImgTitle] = useState(null);
   const [imgSm, setImgSm] = useState(null);
   const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
+  const [uploaded, setUploaded] = useState(0);
+
+  const { dispatch } = useContext(MovieContext);
 
   const handleChange = (e) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
   };
 
-  // console.log(movie);
-  console.log(img);
+  const upload = (items) => {
+    items.forEach((item) => {
+      const fileName = new Date().getTime() + item.label + item.file.name;
+      const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+            setMovie((prev) => {
+              return { ...prev, [item.label]: url };
+            });
+            setUploaded((prev) => prev + 1);
+          });
+        }
+      );
+    });
+  };
 
+  const handleUpload = (e) => {
+    e.preventDefault();
+    upload([
+      { file: img, label: "img" },
+      { file: imgTitle, label: "imgTitle" },
+      { file: imgSm, label: "imgSm" },
+      { file: trailer, label: "trailer" },
+      { file: video, label: "video" },
+    ]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createMovie(movie, dispatch);
+  };
   return (
     <div className="newProduct">
       <h1 className="addProductTitle">New Movie</h1>
@@ -27,13 +71,11 @@ export default function NewProduct() {
             type="file"
             id="img"
             name="img"
-            onChange={(e) => {
-              setImg(e.target.files[0]);
-            }}
+            onChange={(e) => setImg(e.target.files[0])}
           />
         </div>
         <div className="addProductItem">
-          <label>Title Image</label>
+          <label>Title image</label>
           <input
             type="file"
             id="imgTitle"
@@ -42,7 +84,7 @@ export default function NewProduct() {
           />
         </div>
         <div className="addProductItem">
-          <label>Thumbnail Image</label>
+          <label>Thumbnail image</label>
           <input
             type="file"
             id="imgSm"
@@ -63,7 +105,7 @@ export default function NewProduct() {
           <label>Description</label>
           <input
             type="text"
-            placeholder="desc..."
+            placeholder="description"
             name="desc"
             onChange={handleChange}
           />
@@ -81,7 +123,7 @@ export default function NewProduct() {
           <label>Genre</label>
           <input
             type="text"
-            placeholder="genre"
+            placeholder="Genre"
             name="genre"
             onChange={handleChange}
           />
@@ -90,7 +132,7 @@ export default function NewProduct() {
           <label>Duration</label>
           <input
             type="text"
-            placeholder="duration"
+            placeholder="Duration"
             name="duration"
             onChange={handleChange}
           />
@@ -104,9 +146,9 @@ export default function NewProduct() {
             onChange={handleChange}
           />
         </div>
-        <div className="addProductItem" name="isSeries" onChange={handleChange}>
-          <label>Is Series ?</label>
-          <select name="active" id="isSeries">
+        <div className="addProductItem">
+          <label>Is Series?</label>
+          <select name="isSeries" id="isSeries" onChange={handleChange}>
             <option value="false">No</option>
             <option value="true">Yes</option>
           </select>
@@ -118,7 +160,7 @@ export default function NewProduct() {
             name="trailer"
             onChange={(e) => setTrailer(e.target.files[0])}
           />
-        </div>{" "}
+        </div>
         <div className="addProductItem">
           <label>Video</label>
           <input
@@ -127,7 +169,15 @@ export default function NewProduct() {
             onChange={(e) => setVideo(e.target.files[0])}
           />
         </div>
-        <button className="addProductButton">Create</button>
+        {uploaded === 5 ? (
+          <button className="addProductButton" onClick={handleSubmit}>
+            Create
+          </button>
+        ) : (
+          <button className="addProductButton" onClick={handleUpload}>
+            Upload
+          </button>
+        )}
       </form>
     </div>
   );

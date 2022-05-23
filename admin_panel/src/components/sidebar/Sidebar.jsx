@@ -15,6 +15,8 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { PlayCircleOutline } from "@material-ui/icons";
+import { List } from "@material-ui/core";
+import { ListSharp } from "@material-ui/icons";
 
 export default function Sidebar() {
   return (
@@ -54,10 +56,12 @@ export default function Sidebar() {
                 Movies
               </li>
             </Link>
-            <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Transactions
-            </li>
+            <Link to="/lists" className="link">
+              <li className="sidebarListItem">
+                <ListSharp className="sidebarIcon" />
+                Lists
+              </li>
+            </Link>
             <li className="sidebarListItem">
               <BarChart className="sidebarIcon" />
               Reports
