@@ -20,11 +20,10 @@ const Home = ({ type }) => {
           {
             headers: {
               token:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODM0OTk1NGZhMTIwNzZjZmMwYTBkNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1MjkzMTE3OCwiZXhwIjoxNjUzMzYzMTc4fQ.5Op1nnF27M2Or4IjkOGMG-oINONJhpWeu9-X9nLO7o8",
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODM0OTk1NGZhMTIwNzZjZmMwYTBkNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1MzYzNTI5OSwiZXhwIjoxNjU0MDY3Mjk5fQ.gAGv5oWzjqgKqsk88ZOUc0tyGuCetodSn3PzkebupKY",
             },
           }
         );
-        // console.log(res);
         setLists(res.data);
       } catch (err) {
         console.log(err);

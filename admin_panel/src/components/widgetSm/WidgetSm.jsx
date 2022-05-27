@@ -14,7 +14,7 @@ export default function WidgetSm() {
           {
             headers: {
               token:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODM0OTk1NGZhMTIwNzZjZmMwYTBkNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1MzEzNzM0NCwiZXhwIjoxNjUzNTY5MzQ0fQ.ZqX6B4rpoaIF3sFJB8SmVcGRjbTgGwWOwB68WtFfdM0",
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODM0OTk1NGZhMTIwNzZjZmMwYTBkNiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1MzYzNTI5OSwiZXhwIjoxNjU0MDY3Mjk5fQ.gAGv5oWzjqgKqsk88ZOUc0tyGuCetodSn3PzkebupKY",
             },
           }
         );

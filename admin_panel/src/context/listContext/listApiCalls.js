@@ -9,12 +9,12 @@ import {
   getListsFailure,
   getListsStart,
   getListsSuccess,
-} from "./ListActions";
-
+} from "./listActions";
+//get
 export const getLists = async (dispatch) => {
   dispatch(getListsStart());
   try {
-    const res = await axios.get("http://localhost:3300/api/lists", {
+    const res = await axios.get("http://localhost:3300/api/lists/", {
       headers: {
         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
@@ -29,7 +29,7 @@ export const getLists = async (dispatch) => {
 export const createList = async (list, dispatch) => {
   dispatch(createListStart());
   try {
-    const res = await axios.post("http://localhost:3300/api/lists", list, {
+    const res = await axios.post("http://localhost:3300/api/lists/", list, {
       headers: {
         token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
