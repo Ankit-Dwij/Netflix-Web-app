@@ -39,7 +39,7 @@ const Home = ({ type }) => {
       <Featured type={type} setGenre={setGenre} />
 
       {Lists.map((list) => (
-        <List list={list} />
+        <List key={list._id} list={list} />
       ))}
     </div>
   );
