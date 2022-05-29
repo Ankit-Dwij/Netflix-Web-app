@@ -10,6 +10,7 @@ const cors = require("cors");
 
 app.use(cors());
 dotenv.config();
+app.use(express.json());
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -18,7 +19,6 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/movies", movieRoute);
