@@ -9,6 +9,7 @@ import ListItem from "./../listItem/listItem";
 const List = ({ list }) => {
   const [isMoved, setIsMoved] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
+  const [clickLimit, setClickLimit] = useState(window.innerWidth / 230);
   const listRef = useRef();
 
   const handleClick = (direction) => {
@@ -19,7 +20,7 @@ const List = ({ list }) => {
       setSlideNumber(slideNumber - 1);
       listRef.current.style.transform = `translateX(${230 + dist}px)`;
     }
-    if (direction === "right" && slideNumber < 4) {
+    if (direction === "right" && slideNumber < 8 - clickLimit) {
       setSlideNumber(slideNumber + 1);
       listRef.current.style.transform = `translateX(${-230 + dist}px)`;
     }
